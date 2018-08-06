@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VoiceWaveView">
+        <attr name="direction" format="enum">
+            <enum name="bottom" value="0"/>
+            <enum name="up" value="1"/>
+        </attr>
+        <attr name="number" format="integer" />
+        <attr name="progress" format="integer" />
+        <attr name="waveAlpha" format="integer" />
+        <attr name="waveHeight" format="dimension" />
+        <attr name="isFloating" format="boolean" />
+        <attr name="waveColor" format="color" />
+    </declare-styleable>
+</resources>

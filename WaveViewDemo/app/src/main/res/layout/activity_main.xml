@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huangr.waveviewdemo.activity.MainActivity">
+
+    <!--app:viewWidth="300dp"
+    app:viewHeight="300dp"-->
+    <Button
+        android:id="@+id/btn_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_voice_bg"
+        android:text="按下开始说话" />
+    <Button
+        android:id="@+id/btn_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_voice"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_voice_bg"
+        android:text="按下开始增长"
+        />
+    <com.huangr.waveviewdemo.widget.VoiceWaveView
+        android:id="@+id/voiceWaveView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:number="2"
+        app:progress="50"
+        app:waveHeight="40dp"
+        app:isFloating="true"
+        app:waveColor="@color/colorPrimary"
+        app:waveAlpha="50"/>
+
+</RelativeLayout>
