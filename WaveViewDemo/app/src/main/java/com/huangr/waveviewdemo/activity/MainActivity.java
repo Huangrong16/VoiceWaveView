@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
     Runnable runnableVoice = new Runnable() {
         @Override
         public void run() {
-            int progress = (int) (Math.random() * 30 + 20);
-            Log.d(TAG, "onTouch() called with: , progress = [" + progress + "]");
-            voiceWaveView.setProgress(progress);
+            int voice = (int) (Math.random() * 80 + 60);
+            Log.d(TAG, "onTouch() called with: , voice = [" + voice + "]");
+            voiceWaveView.setWaveHeight(voice);
             handlerVoice.postDelayed(runnableVoice,500);
         }
     };
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     btnVoice.setText("松开停止说话");
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
                     handlerVoice.removeCallbacksAndMessages(null);
+                    //voiceWaveView.resetWaveHeight();
                     btnVoice.setText("按下开始说话");
                 }
                 return false;
@@ -94,10 +95,13 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
                     //进度逐渐变化，触发progress由0到100的循环
+                    voiceWaveView.setWaveHeight(100);
+                    voiceWaveView.setProgress(0);
                     handlerProgress.sendEmptyMessage(0);
                     btnProgress.setText("松开停止增长");
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
                     handlerProgress.removeCallbacksAndMessages(null);
+                    voiceWaveView.resetProgress();
                     btnProgress.setText("按下开始增长");
                 }
                 return false;

@@ -27,20 +27,20 @@ public class VoiceWaveView extends View{
     /**
      * 波纹的个数
      */
-    private int number;
+    private int number = 2;
 
     /**
      * 水波基数的高度
      */
-    private int progress;
+    private int progress = 10;
     /**
      * 水波波纹的高度
      */
-    private float waveHeight;
+    private float waveHeight = 20;
     /**
      * 是否一直浮动，true代表一直动，false代表停止动
      */
-    private boolean isFloating;
+    private boolean isFloating = true;
     /**
      * 波纹的颜色
      */
@@ -48,7 +48,7 @@ public class VoiceWaveView extends View{
     /**
      * 透明度
      */
-    private int alpha;
+    private int alpha = 50;
 
     /**
      * 宽度
@@ -75,6 +75,15 @@ public class VoiceWaveView extends View{
      */
     private Point mStartPoint;
 
+    /**
+     * 驱动声波缓慢下降
+     */
+    private boolean downWave = false;
+    /**
+     * 驱动声波缓慢变小
+     */
+    private boolean declineWave = false;
+
     public VoiceWaveView(Context context) {
         super(context, null);
     }
@@ -86,12 +95,12 @@ public class VoiceWaveView extends View{
     public VoiceWaveView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.VoiceWaveView);
-        number = typedArray.getInteger(R.styleable.VoiceWaveView_number, 2);
-        progress = typedArray.getInteger(R.styleable.VoiceWaveView_progress, 50);
-        waveHeight = typedArray.getDimension(R.styleable.VoiceWaveView_waveHeight, 40);
-        isFloating = typedArray.getBoolean(R.styleable.VoiceWaveView_isFloating, true);
+        number = typedArray.getInteger(R.styleable.VoiceWaveView_number, number);
+        progress = typedArray.getInteger(R.styleable.VoiceWaveView_progress, progress);
+        waveHeight = typedArray.getDimension(R.styleable.VoiceWaveView_waveHeight, waveHeight);
+        isFloating = typedArray.getBoolean(R.styleable.VoiceWaveView_isFloating, isFloating);
         waveColor = typedArray.getColor(R.styleable.VoiceWaveView_waveColor, context.getResources().getColor(R.color.colorPrimary));
-        alpha = typedArray.getInteger(R.styleable.VoiceWaveView_waveAlpha, 50);
+        alpha = typedArray.getInteger(R.styleable.VoiceWaveView_waveAlpha, alpha);
         typedArray.recycle();
     }
 
@@ -176,6 +185,21 @@ public class VoiceWaveView extends View{
             mStartPoint.x = -waveWidth*4;
         }
         mStartPoint.x += offset;//每次偏移offset
+
+        if(downWave){
+            if(this.progress > 10){
+                this.progress = this.progress -10;
+            }else{
+                downWave = false;
+            }
+        }
+        if(declineWave){
+            if(this.waveHeight > 20){
+                this.waveHeight = this.waveHeight -5;
+            }else{
+                declineWave = false;
+            }
+        }
         Log.d(TAG, "onDraw() called with: waveHeight = [" + waveHeight + "]");
         if(isFloating){
             postInvalidateDelayed(duration);
@@ -196,5 +220,13 @@ public class VoiceWaveView extends View{
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public void resetProgress() {
+        downWave = true;
+    }
+
+    public void resetWaveHeight() {
+        declineWave = true;
     }
 }
